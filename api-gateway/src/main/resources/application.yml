@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: ApiGateway
+  cloud.gateway:
+    discovery:
+      locator:
+        enabled: true
+        lowerCaseServiceId: true
+    routes:
+      - id: items
+        uri: lb://ITEM-CATALOG
+        predicates:
+          - Path=/item/**
+      - id: albums
+        uri: lb://EDGE-SERVICE
+        predicates:
+          - Path=/edge/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8080
